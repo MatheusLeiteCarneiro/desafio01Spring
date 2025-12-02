@@ -1,5 +1,6 @@
 package com.desafio.orders.services;
 
+import com.desafio.orders.entities.Order;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -11,4 +12,10 @@ public class OrderService {
         this.shippingService = shippingService;
     }
 
+    public double total(Order order){
+        double basicPrice = order.getBasic();
+        double discountValue =  basicPrice * order.getDiscount() / 100.0;
+        double shipmentFee = shippingService.shipment(order);
+        return basicPrice - discountValue + shipmentFee ;
+    }
 }
